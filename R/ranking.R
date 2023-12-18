@@ -52,7 +52,9 @@ Ranking <- function(players = NULL, defaultScore = 5000) {
 
   public$processGame <- function(result, implicitlyAddPlayers = TRUE) {
 
-    for(n in result) public$ensurePlayerExists(n)
+    if(implicitlyAddPlayers) {
+      for(n in result) public$ensurePlayerExists(n)
+    }
 
     for(n in result) {
       private$GAMES_PLAYED[[n]] <- private$GAMES_PLAYED[[n]] + 1
@@ -106,6 +108,18 @@ Ranking <- function(players = NULL, defaultScore = 5000) {
       public$addPlayerPoints(playerIdentity, POINTS[i])
     }
 
+  }
+
+  public$processGames <- function(x,
+                                  gameIdVar = "Race",
+                                  playerIdVar = "Name",
+                                  playerPositionVar = "Rank") {
+    for(race in sort(unique(x[[gameIdVar]]))) {
+      x_race <- x[x[[gameIdVar]] == race,]
+      x_race[] <- x_race[order(x_race[[playerPositionVar]]),]
+
+      public$processGame(x_race$Name)
+    }
   }
 
   public$ranking <- function() {
