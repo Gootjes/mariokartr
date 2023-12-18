@@ -5,7 +5,7 @@
 #' r <- Ranking(c("a", "b", "c"))
 #' r$addPlayer("d")
 #'
-#' r$processGame(c("c", "d", "a", "b")) # first place is c, second place is a, ...
+#' r$processGame(c("c", "d", "a", "b")) # first place is c, second place is d, ...
 #'
 #' r$ranking() # Get the ranking
 #'
